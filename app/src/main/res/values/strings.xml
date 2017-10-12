@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">StickyRefresh</string>
+    <string name="start_bezier_four">Start Bezier Four</string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="swing.downey.stickyrefresh.MainActivity">
+
+    <swing.downey.stickyrefresh.widget.TouchPullView
+        android:id="@+id/touch_pull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pContentDrawable="@drawable/ic_draw_circle"
+        app:pContentDrawableMargin="2dp"
+        app:pDragHeight="120dp"
+        app:pColor="@color/colorAccent"
+        app:pRadius="20dp"
+        app:pTangentAngle="110"
+        app:pTargetGravityHeight="4dp"
+        app:pTargetWidth="200dp"/>
+
+    <!--<swing.downey.stickyrefresh.widget.TestBezier-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="5"-->
+        <!--android:visibility="gone"-->
+        <!--tools:layout_editor_absoluteY="0dp"-->
+        <!--tools:layout_editor_absoluteX="8dp" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/start"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="@string/start_bezier_four"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textSize="20sp"-->
+        <!--android:visibility="gone"-->
+        <!--tools:layout_editor_absoluteY="0dp"-->
+        <!--tools:layout_editor_absoluteX="8dp" />-->
+
+</RelativeLayout>
