@@ -12,7 +12,7 @@ import swing.downey.stickyrefresh.widget.TouchPullView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final float TOUCH_MOVE_Y_MAX = 600;
+    private static final int TOUCH_MOVE_Y_MAX = 600;
     private float mTouchMoveStartY;
     private TouchPullView mTouchPullView;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case MotionEvent.ACTION_UP:
                         Toast.makeText(MainActivity.this,"ACTION_UP",Toast.LENGTH_SHORT).show();
-                        mTouchPullView.release();
+                        mTouchPullView.releaseView();
 //                        mTouchPullView.setProgress(0);
                         break;
                     default:

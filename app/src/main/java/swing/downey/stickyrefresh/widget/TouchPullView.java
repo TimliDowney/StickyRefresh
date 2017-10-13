@@ -36,6 +36,10 @@ public class TouchPullView extends View {
 
     //进度值
     private float mProgress;
+    //进度差值器
+    private Interpolator mProgressInterpolator = new DecelerateInterpolator();
+    //角度差值器
+    private Interpolator mTanentAngleInterpolator;
 
     //目标宽度
     private int mTargetWidth = 300;
@@ -46,8 +50,6 @@ public class TouchPullView extends View {
     private int mTargetGravityHeight = 10;
     //角度变换0~135度
     private int mTangentAngle = 105;
-    private Interpolator mProgressInterpolator = new DecelerateInterpolator();
-    private Interpolator mTanentAngleInterpolator;
 
 
     //可拖动的高度
@@ -85,18 +87,20 @@ public class TouchPullView extends View {
         //得到设置的参数
         final Context context = getContext();
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TouchPullView, 0, 0);
-        int color = array.getColor(R.styleable.TouchPullView_pColor, 0x20000000);
+        int color = array.getColor(R.styleable.TouchPullView_pColor, 0x303F9F);
         mCircleRadius = array.getDimension(R.styleable.TouchPullView_pRadius, mCircleRadius);
         mDragHeight = array.getDimensionPixelOffset(R.styleable.TouchPullView_pDragHeight, mDragHeight);
         mTangentAngle = array.getInteger(R.styleable.TouchPullView_pTangentAngle, 500);
         mTargetWidth = array.getDimensionPixelOffset(R.styleable.TouchPullView_pTargetWidth, mTargetWidth);
         mTargetGravityHeight = array.getDimensionPixelOffset(R.styleable.TouchPullView_pTargetGravityHeight,
                 mTargetGravityHeight);
+//        mDrawable = array.getDrawable(R.styleable.TouchPullView_pContentDrawable);
         mContent = array.getDrawable(R.styleable.TouchPullView_pContentDrawable);
         mContentMargin = array.getDimensionPixelOffset(R.styleable.TouchPullView_pContentDrawableMargin, 0);
 
         //销毁
         array.recycle();
+        
 
         //<Paint.ANTI_ALIAS_FLAG  set true－－用于绘制时抗锯齿.
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -106,7 +110,7 @@ public class TouchPullView extends View {
         p.setDither(true);
         //设置为填充方式。
         p.setStyle(Paint.Style.FILL);
-        p.setColor(0xFF000000);//Black
+        p.setColor(color);
         mCirclePaint = p;
 
         //初始化路径部分画笔
@@ -120,7 +124,8 @@ public class TouchPullView extends View {
         p.setStyle(Paint.Style.FILL);
 //        p.setColor(0xFF000000);//Black
 //        mCirclePaint = p;
-        p.setColor(0xFFFF0000);//Red
+        p.setColor(color);
+//        p.setColor(0xFF0000ff);
         mPathPaint = p;
 
         //切角路径差值器
@@ -152,7 +157,6 @@ public class TouchPullView extends View {
             //绘制Drawable
             drawable.draw(canvas);
             canvas.restore();
-
         }
 
         canvas.restoreToCount(count);
@@ -308,13 +312,15 @@ public class TouchPullView extends View {
      */
     private void UpdateContentLayout(float cx, float cy, float radius) {
         Drawable drawable = mContent;
+        Log.d(TAG, "drawable1: " + drawable);
         if (drawable != null) {
+            Log.d(TAG, "drawable2: " + drawable);
             int margin = mContentMargin;
             int left = (int) (cx - radius + margin);
             int right = (int) (cx + radius - margin);
             int top = (int) (cy - radius + margin);
             int bottom = (int) (cy + radius - margin);
-            drawable.setBounds(left, right, top, bottom);
+            drawable.setBounds(left, top, right, bottom);
         }
     }
 //    private int getWeightOrHeight(int value){}
@@ -334,7 +340,10 @@ public class TouchPullView extends View {
     //释放动画
     private ValueAnimator valueAnimator;
 
-    public void release() {
+    /**
+     * 添加释放操作
+     */
+    private void release() {
         if (valueAnimator == null) {
             final ValueAnimator animator = ValueAnimator.ofFloat(mProgress, 0f);
             animator.setInterpolator(new DecelerateInterpolator());
@@ -355,4 +364,9 @@ public class TouchPullView extends View {
         }
         valueAnimator.start();
     }
+
+    public void releaseView() {
+        release();
+    }
+
 }
